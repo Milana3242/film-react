@@ -1,38 +1,152 @@
-.App {
-  text-align: center;
+body {
+  background: #5a97b1;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.headerDiv {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  background: #386c80;
+  padding: 5px 30px;
+}
+
+.headerDiv svg {
+  padding-top: 10px;
+}
+
+.headerNav {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 80px;
+}
+
+.headerNav a {
+  margin-right: 20px;
+  font-size: 30px;
+  font-weight: 600;
+  font-family: 'Courier New', Courier, monospace;
   color: white;
+  transition: 0.4s;
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+.headerNav :hover {
+  color: #cbdde9;
+  opacity: 0.5;
+}
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 50px;
+  padding: 30px;
+}
+.card {
+  width: 30%;
+  background: #6c81ac;
+  padding: 10px;
+  text-decoration: none;
+  transition: 0.5s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card p {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  font-size: 20px;
+  color: wheat;
+}
+
+.card div {
+  background: white;
+  width: 150px;
+  height: 30px;
+  text-decoration: none;
+  color: #a675b3;
+  text-align: center;
+  line-height: 20px;
+  display: block;
+  margin: 20px auto;
+  font: normal 17px arial;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.card a:active {
+  background: rgb(176, 157, 157);
+}
+
+.card:active {
+  background: rgb(43, 66, 140);
+}
+
+.cardImg {
+  width: 200px;
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.open-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.img-card {
+  width: 500px;
+}
+
+.img-card img {
+  width: 500px;
+  object-fit: cover;
+}
+
+.img-card p {
+  margin-top: 15px;
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.card-desk {
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.time {
+  font-style: 30px;
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.list-check {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+}
+
+.btn-end {
+  background: white;
+  width: 180px;
+  height: 50px;
+  text-decoration: none;
+  color: #3a6189;
+  text-align: center;
+  line-height: 20px;
+  display: block;
+  margin: 20px auto;
+  font: normal 17px arial;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.btn-end:active {
+  background: rgb(176, 157, 157);
+  text-decoration: none;
 }
