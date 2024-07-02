@@ -1,30 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import React from "react";
+import FilmsRender from "../components/FilmsRender";
+import { useNavigate } from "react-router-dom";
 
 function FilmOpen(props) {
-  const par = useParams();
-  const films = useSelector((state) => state.films);
+    const navigate = useNavigate();
 
-  const film = films.filter((film) => film.id == par.id);
-  console.log(film);
-  console.log(par.id);
+  function goTranslatePage() {
+    navigate("/TranslatePage");
+  }
   return (
     <div>
-      {film.map((item, i) => {
-        return (
-          <div class="open-card">
-            <div class="img-card">
-              <img src={item.img} />
-              <p>{item.name}</p>
-            </div>
-            <div class="card-desk">
-              <h1>Описание к фильму</h1>
-              {item.desk}
-            </div>
-          </div>
-        );
-      })}
+     <FilmsRender/>
       <hr />
       <h2 class="time">Выберите длительность:</h2>
       <ul class="list-check">
@@ -69,7 +55,7 @@ function FilmOpen(props) {
           </label>
         </li>
       </ul>
-      <button id="btn" class="btn-end">
+      <button onClick={goTranslatePage} id="btn" class="btn-end">
         Нажать
       </button>
     </div>
