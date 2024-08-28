@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 function TranslateForm({ bulTranslate, count, bulSentence, setBulSentence }) {
   const words = useSelector((state) => state.words);
-
+console.log(count)
   return (
     <div class="render-div ">
       <div>

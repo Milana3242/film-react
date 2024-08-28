@@ -1,9 +1,9 @@
 import React from 'react';
-import Card from '../components/Card';
+import Films from '../components/Films';
 function Home(props) {
   return (
     <>
-      <Card></Card>
+      <Films></Films>
     </>
   );
 }

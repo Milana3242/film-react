@@ -10,26 +10,28 @@ function TranslatePage(props) {
   const [count, setCount] = React.useState(0);
   const words = useSelector((state) => state.words);
   function showTranslate() {
-    setBulTranslate(!bulTranslate);
+    setBulTranslate(true);
   }
 
   function targetValue(e) {
     if (words.length === count + 1) {
-      //   return setCount(0);
+      setCount(0);
       console.log("sdd");
-    }
-    console.log(e.target);
-    let value = e.target.value;
-    if (value == undefined) {
-      value = e.target.textContent;
-    }
-    console.log("count", value);
-    dispatch(changeDificult({ value, count }));
+    } else {
+      console.log(e.target);
+      let value = e.target.value;
+      if (value == undefined) {
+        value = e.target.textContent;
+      }
+      console.log("count", value);
+      dispatch(changeDificult({ value, count }));
 
-    setCount(count + 1);
-    setBulTranslate(!bulTranslate);
-    setBulSentence(!bulSentence)
+      setCount(count + 1);
+      setBulTranslate(false);
+      setBulSentence(false);
+    }
   }
+  
   return (
     <div>
       <TranslateForm
@@ -48,13 +50,13 @@ function TranslatePage(props) {
           <h2 class="time">Выберите сложность:</h2>
           <ul onClick={(e) => targetValue(e)} class="list-check">
             <li class="list-check__item">
-              <label class="list-check__label">
+              <label  class="list-check__label">
                 <input type="radio" name="dif" value="1" />
-                <span class="label-text">1</span>
+                <span  class="label-text">1</span>
               </label>
             </li>
             <li class="list- check__item">
-              <label class="list-check__label">
+              <label  class="list-check__label">
                 <input type="radio" name="dif" value="2" />
                 <span class="label-text">2</span>
               </label>

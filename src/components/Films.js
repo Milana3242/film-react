@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-function Card(props) {
+function Films(props) {
   const films = useSelector((state) => state.films);
 
   return (
@@ -20,4 +20,4 @@ function Card(props) {
   );
 }
 
-export default Card;
+export default Films;
