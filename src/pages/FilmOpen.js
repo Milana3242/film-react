@@ -1,19 +1,52 @@
 import React from "react";
-import FilmsRender from "../components/FilmsRender";
-import { useNavigate } from "react-router-dom";
+import FilmOpenRender from "../components/FilmOpenRender";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function FilmOpen(props) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const par = useParams();
+
+  const [openFilm, setOpenFilm] = React.useState([]);
+  const [item, setItem] = React.useState();
+  const [time, setTime] = React.useState();
+
+  async function getOpenFilm() {
+    try {
+      const res = await axios.get(
+        `https://6686a7ef83c983911b03234c.mockapi.io/films?id=${par.id}`
+      );
+      setOpenFilm(res.data);
+      // console.log(res.data)
+    } catch (err) {
+      console.log(err);
+    }
+    window.scrollTo(0, 0);
+  }
+
+  React.useEffect(() => {
+    getOpenFilm();
+  }, []);
+
+  function getItem(e) {
+    setItem(e.target.value);
+  }
+
+  function getTime(e) {
+    setTime(e.target.value);
+  }
 
   function goTranslatePage() {
-    navigate("/TranslatePage");
+    navigate(`/TranslatePage?item=${item}&time=${time}`);
   }
+
+  console.log(openFilm);
   return (
     <div>
-     <FilmsRender/>
+      <FilmOpenRender film={openFilm} />
       <hr />
       <h2 class="time">Выберите длительность:</h2>
-      <ul class="list-check">
+      <ul onClick={(e) => getTime(e)} class="list-check">
         <li class="list-check__item">
           <label class="list-check__label">
             <input type="radio" name="min" value="5" />
@@ -41,7 +74,7 @@ function FilmOpen(props) {
       </ul>
       <hr />
       <h2 class="time">Выберите режим:</h2>
-      <ul class="list-check">
+      <ul onClick={(e) => getItem(e)} class="list-check">
         <li class="list-check__item">
           <label class="list-check__label">
             <input type="radio" name="trans" value="1" />
@@ -56,7 +89,7 @@ function FilmOpen(props) {
         </li>
       </ul>
       <button onClick={goTranslatePage} id="btn" class="btn-end">
-        Нажать
+        START
       </button>
     </div>
   );

@@ -1,76 +1,194 @@
 import React from "react";
-import TranslateForm from "../components/TranslateForm";
+import TranslateWord from "../components/TranslateWord";
 import { useSelector, useDispatch } from "react-redux";
-import { changeDificult } from "../redux/slices/wordsSlice";
+import { changeDificult, getWords } from "../redux/slices/wordsSlice";
+import TranslateSentence from "../components/TranslateSentence";
+import { useParams, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
-function TranslatePage(props) {
+const words = [
+  {
+    id: 1,
+    text: "home",
+    translate: "дом",
+    trFilm: ["my home", "dear home", "home sweet home"],
+    type: 1,
+    dificult: 0,
+  },
+  {
+    id: 2,
+    text: "home",
+    translate: "дом",
+    trFilm: ["my home", "dear home", "home sweet home"],
+    type: 1,
+    dificult: 0,
+  },
+  {
+    id: 3,
+    text: "home",
+    translate: "дом",
+    trFilm: ["my home", "dear home", "home sweet home"],
+    type: 1,
+    dificult: 0,
+  },
+  {
+    id: 4,
+    text: "home",
+    translate: "дом",
+    trFilm: ["my home", "dear home", "home sweet home"],
+    type: 1,
+    dificult: 0,
+  },
+  {
+    id: 5,
+    text: "my love home",
+    trFilm: "мой любимый дом",
+    type: 2,
+    dificult: 0,
+  },
+  {
+    id: 6,
+    text: "my dear home",
+    trFilm: "мой дорогой дом",
+    type: 2,
+    dificult: 0,
+  },
+  {
+    id: 7,
+    text: "my beautiful home",
+    trFilm: "мой красивый дом",
+    type: 2,
+    dificult: 0,
+  },
+  {
+    id: 8,
+    text: "my wonderful home",
+    trFilm: "мой чудесный дом",
+    type: 2,
+    dificult: 0,
+  },
+];
+
+function TranslatePage() {
+  async function getCard(params) {
+    try {
+      const res = await axios.get(
+        `https://6686a7ef83c983911b03234c.mockapi.io/films`
+      );
+      const filterItems = words.filter((item) => item.type == params);
+      const randomIndex = Math.floor(Math.random() * filterItems.length);
+
+      console.log('filterItems',filterItems, randomIndex)
+      console.log(params)
+      dispatch(getWords(filterItems[randomIndex]));
+    } catch (err) {
+      console.log(err);
+    }
+    // window.scrollTo(0, 0);
+  }
+
+  async function sendResult(value) {
+    try {
+      const res = await axios.post(
+        `https://6686a7ef83c983911b03234c.mockapi.io/`
+      );
+      const cardResult = { id: item.id, dificult: value };
+      console.log(cardResult);
+    } catch (err) {
+      console.log(err);
+    }
+    // window.scrollTo(0, 0);
+  }
+
+
+
   const dispatch = useDispatch();
-  const [bulTranslate, setBulTranslate] = React.useState(false);
-  const [bulSentence, setBulSentence] = React.useState(false);
-  const [count, setCount] = React.useState(0);
-  const words = useSelector((state) => state.words);
+  const [showCard, setShowCard] = React.useState(false);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = searchParams.get("item");
+console.log(params)
+  const item = useSelector((state) => state.words);
+
   function showTranslate() {
-    setBulTranslate(true);
+    setShowCard(true);
   }
 
   function targetValue(e) {
-    if (words.length === count + 1) {
-      setCount(0);
-      console.log("sdd");
-    } else {
-      console.log(e.target);
-      let value = e.target.value;
-      if (value == undefined) {
-        value = e.target.textContent;
-      }
-      console.log("count", value);
-      dispatch(changeDificult({ value, count }));
+    // if (items.length === count + 1) {
+    //   setCount(0);
+    //   console.log("sdd");
+    // } else {
+    //   console.log(e.target);
+    //   let value = e.target.value;
+    //   if (value == undefined) {
+    //     value = e.target.textContent;
+    //   }
+    //   console.log("count", value);
+    //   dispatch(changeDificult({ value, count }));
 
-      setCount(count + 1);
-      setBulTranslate(false);
-      setBulSentence(false);
+    //   setCount(count + 1);
+    //   setBulTranslate(false);
+    //   setBulSentence(false);
+    // }
+    let value = e.target.value;
+    if (value == undefined) {
+      value = e.target.textContent;
     }
+
+    sendResult(value);
+    getCard();
+    setShowCard(false);
   }
-  
+
+  React.useEffect(() => {
+console.log('params', params)
+
+    if(params){
+      getCard(params);
+    }
+
+  }, [params]);
+
   return (
     <div>
-      <TranslateForm
-        bulTranslate={bulTranslate}
-        bulSentence={bulSentence}
-        setBulSentence={setBulSentence}
-        count={count}
-      />
+      {params == 1 ? (
+        <TranslateWord showCard={showCard} item={item} />
+      ) : (
+        <TranslateSentence item={item} showCard={showCard} />
+      )}
+
       <button onClick={showTranslate} id="btn" class="btn-end">
         Показать
       </button>
-      {bulTranslate == false ? (
+      {showCard == false ? (
         ""
       ) : (
         <div class="radio none">
           <h2 class="time">Выберите сложность:</h2>
           <ul onClick={(e) => targetValue(e)} class="list-check">
             <li class="list-check__item">
-              <label  class="list-check__label">
-                <input type="radio" name="dif" value="1" />
-                <span  class="label-text">1</span>
-              </label>
-            </li>
-            <li class="list- check__item">
-              <label  class="list-check__label">
-                <input type="radio" name="dif" value="2" />
-                <span class="label-text">2</span>
+              <label class="list-check__label">
+                <input type="radio" name="dif" value="HARD" />
+                <span class="label-text">HARD</span>
               </label>
             </li>
             <li class="list- check__item">
               <label class="list-check__label">
-                <input type="radio" name="dif" value="3" />
-                <span class="label-text">3</span>
+                <input type="radio" name="dif" value="MIDDLE" />
+                <span class="label-text">MIDDLE</span>
               </label>
             </li>
             <li class="list- check__item">
               <label class="list-check__label">
-                <input type="radio" name="dif" value="4" />
-                <span class="label-text">4</span>
+                <input type="radio" name="dif" value="EASY" />
+                <span class="label-text">EASY</span>
+              </label>
+            </li>
+            <li class="list- check__item">
+              <label class="list-check__label">
+                <input type="radio" name="dif" value="DONE" />
+                <span class="label-text">DONE</span>
               </label>
             </li>
           </ul>

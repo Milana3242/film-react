@@ -2,14 +2,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-function FilmsRender(props) {
-    const par = useParams();
-    const films = useSelector((state) => state.films);
+function FilmOpenRender({film}) {
+    // const par = useParams();
+    // const films = useSelector((state) => state.films);
 
-    const film = films.filter((film) => film.id == par.id);
-    console.log(film);
-    console.log(par.id);
-
+    // const film = films.filter((film) => film.id == par.id);
+    // console.log(film);
+    // console.log(par.id);
+console.log(film)
   return (
     <>
       {film.map((item, i) => {
@@ -30,4 +30,4 @@ function FilmsRender(props) {
   );
 }
 
-export default FilmsRender;
+export default FilmOpenRender;

@@ -7,10 +7,10 @@ const filmSlices = createSlice({
   initialState,
   reducers: {
     getFilms(state, action) {
-      state = action.payload;
+      return action.payload;
     },
   },
 });
 
-export const {} = filmSlices.actions;
+export const {getFilms} = filmSlices.actions;
 export default filmSlices.reducer;

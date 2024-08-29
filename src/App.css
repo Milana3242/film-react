@@ -164,3 +164,7 @@ body {
   font-family: "Courier New", Courier, monospace;
   color: purple;
 }
+
+.render-div h4{
+  text-align: center;
+}
