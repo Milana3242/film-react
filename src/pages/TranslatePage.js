@@ -42,34 +42,55 @@ const words = [
   {
     id: 5,
     text: "my love home",
-    trFilm: "мой любимый дом",
+    trFilm: ["мой любимый дом"],
     type: 2,
     dificult: 0,
   },
   {
     id: 6,
     text: "my dear home",
-    trFilm: "мой дорогой дом",
+    trFilm: ["мой дорогой дом"],
     type: 2,
     dificult: 0,
   },
   {
     id: 7,
     text: "my beautiful home",
-    trFilm: "мой красивый дом",
+    trFilm: ["мой красивый дом"],
     type: 2,
     dificult: 0,
   },
   {
     id: 8,
     text: "my wonderful home",
-    trFilm: "мой чудесный дом",
+    trFilm: ["мой чудесный дом"],
     type: 2,
     dificult: 0,
   },
 ];
 
 function TranslatePage() {
+  const [showCard, setShowCard] = React.useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const params = searchParams.get("item");
+  const item = useSelector((state) => state.words);
+  const dispatch = useDispatch();
+
+  function showTranslate() {
+    setShowCard(true);
+  }
+
+  function targetValue(e) {
+    let value = e.target.value;
+    if (value == undefined) {
+      value = e.target.textContent;
+    }
+    sendResult(value);
+    getCard(params);
+    setShowCard(false);
+  }
+
   async function getCard(params) {
     try {
       const res = await axios.get(
@@ -78,8 +99,8 @@ function TranslatePage() {
       const filterItems = words.filter((item) => item.type == params);
       const randomIndex = Math.floor(Math.random() * filterItems.length);
 
-      console.log('filterItems',filterItems, randomIndex)
-      console.log(params)
+      console.log("filterItems", filterItems, randomIndex);
+      console.log(params);
       dispatch(getWords(filterItems[randomIndex]));
     } catch (err) {
       console.log(err);
@@ -100,54 +121,10 @@ function TranslatePage() {
     // window.scrollTo(0, 0);
   }
 
-
-
-  const dispatch = useDispatch();
-  const [showCard, setShowCard] = React.useState(false);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const params = searchParams.get("item");
-console.log(params)
-  const item = useSelector((state) => state.words);
-
-  function showTranslate() {
-    setShowCard(true);
-  }
-
-  function targetValue(e) {
-    // if (items.length === count + 1) {
-    //   setCount(0);
-    //   console.log("sdd");
-    // } else {
-    //   console.log(e.target);
-    //   let value = e.target.value;
-    //   if (value == undefined) {
-    //     value = e.target.textContent;
-    //   }
-    //   console.log("count", value);
-    //   dispatch(changeDificult({ value, count }));
-
-    //   setCount(count + 1);
-    //   setBulTranslate(false);
-    //   setBulSentence(false);
-    // }
-    let value = e.target.value;
-    if (value == undefined) {
-      value = e.target.textContent;
-    }
-
-    sendResult(value);
-    getCard();
-    setShowCard(false);
-  }
-
   React.useEffect(() => {
-console.log('params', params)
-
-    if(params){
+    if (params) {
       getCard(params);
     }
-
   }, [params]);
 
   return (

@@ -168,3 +168,9 @@ body {
 .render-div h4{
   text-align: center;
 }
+
+.slider_val{
+  text-align: center;
+  color: white;
+  font-size: 30px;
+}

@@ -13,7 +13,7 @@ function TranslateSentence({ item, showCard }) {
           {showCard == false ? (
             ""
           ) : (
-            <span class="render-div-translate">{item.trFilm}</span>
+            <span class="render-div-translate">{item.trFilm[0]}</span>
           )}
 
           <br></br>

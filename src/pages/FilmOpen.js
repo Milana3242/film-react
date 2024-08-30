@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import FilmOpenRender from "../components/FilmOpenRender";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "react-rangeslider/lib/index.css";
+import MultiRangeSlider from "multi-range-slider-react";
 
 function FilmOpen(props) {
   const navigate = useNavigate();
@@ -9,7 +11,22 @@ function FilmOpen(props) {
 
   const [openFilm, setOpenFilm] = React.useState([]);
   const [item, setItem] = React.useState();
-  const [time, setTime] = React.useState();
+
+  const [minValue, set_minValue] = useState(1);
+  const [maxValue, set_maxValue] = useState(100);
+  const handleInput = (e) => {
+    set_minValue(e.minValue);
+    set_maxValue(e.maxValue);
+  };
+
+  function getItem(e) {
+    setItem(e.target.value);
+  }
+
+  function goTranslatePage() {
+    if (item == undefined) return alert("Выберите, пожалуйста ,режим!");
+    navigate(`/TranslatePage?item=${item}&time=${maxValue - minValue}`);
+  }
 
   async function getOpenFilm() {
     try {
@@ -17,7 +34,7 @@ function FilmOpen(props) {
         `https://6686a7ef83c983911b03234c.mockapi.io/films?id=${par.id}`
       );
       setOpenFilm(res.data);
-      // console.log(res.data)
+      console.log(res.data)
     } catch (err) {
       console.log(err);
     }
@@ -28,51 +45,11 @@ function FilmOpen(props) {
     getOpenFilm();
   }, []);
 
-  function getItem(e) {
-    setItem(e.target.value);
-  }
-
-  function getTime(e) {
-    setTime(e.target.value);
-  }
-
-  function goTranslatePage() {
-    navigate(`/TranslatePage?item=${item}&time=${time}`);
-  }
-
-  console.log(openFilm);
   return (
     <div>
       <FilmOpenRender film={openFilm} />
       <hr />
-      <h2 class="time">Выберите длительность:</h2>
-      <ul onClick={(e) => getTime(e)} class="list-check">
-        <li class="list-check__item">
-          <label class="list-check__label">
-            <input type="radio" name="min" value="5" />
-            <span class="label-text">5 минут</span>
-          </label>
-        </li>
-        <li class="list- check__item">
-          <label class="list-check__label">
-            <input type="radio" name="min" value="10" />
-            <span class="label-text">10 минут</span>
-          </label>
-        </li>
-        <li class="list- check__item">
-          <label class="list-check__label">
-            <input type="radio" name="min" value="20" />
-            <span class="label-text">20 минут</span>
-          </label>
-        </li>
-        <li class="list- check__item">
-          <label class="list-check__label">
-            <input type="radio" name="min" value="30" />
-            <span class="label-text">30 минут</span>
-          </label>
-        </li>
-      </ul>
-      <hr />
+
       <h2 class="time">Выберите режим:</h2>
       <ul onClick={(e) => getItem(e)} class="list-check">
         <li class="list-check__item">
@@ -88,6 +65,25 @@ function FilmOpen(props) {
           </label>
         </li>
       </ul>
+      <hr />
+
+      <h2 class="time">Выберите длительность:</h2>
+      <MultiRangeSlider
+        min={1}
+        max={100}
+        step={5}
+        stepOnly={true}
+        minValue={minValue}
+        maxValue={maxValue}
+        onInput={(e) => {
+          handleInput(e);
+        }}
+      />
+      <div className="slider_val">
+        Длительность:{maxValue - minValue} минут
+      </div>
+      <hr />
+
       <button onClick={goTranslatePage} id="btn" class="btn-end">
         START
       </button>
