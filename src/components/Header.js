@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Header(props) {
+
+
+
   return (
     <div class="headerDiv">
       <nav class="headerNav">
         <Link to="/">Главная</Link>
-        <a href="#">Авторизация</a>
+        <Link to="/Auth/">Авторизация</Link>
         <a href="#">Отзывы</a>
       </nav>
       <svg

@@ -92,9 +92,14 @@ function TranslatePage() {
   }
 
   async function getCard(params) {
+    let config = {
+      headers: {
+        header1: token,
+      }
+    }
     try {
       const res = await axios.get(
-        `https://6686a7ef83c983911b03234c.mockapi.io/films`
+        `https://6686a7ef83c983911b03234c.mockapi.io/films`,config
       );
       const filterItems = words.filter((item) => item.type == params);
       const randomIndex = Math.floor(Math.random() * filterItems.length);
@@ -107,11 +112,18 @@ function TranslatePage() {
     }
     // window.scrollTo(0, 0);
   }
+    const token=window.localStorage.getItem('token')
 
   async function sendResult(value) {
+
+    let config = {
+      headers: {
+        header1: token,
+      }
+    }
     try {
       const res = await axios.post(
-        `https://6686a7ef83c983911b03234c.mockapi.io/`
+        `https://6686a7ef83c983911b03234c.mockapi.io/`,config
       );
       const cardResult = { id: item.id, dificult: value };
       console.log(cardResult);

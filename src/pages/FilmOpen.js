@@ -28,10 +28,18 @@ function FilmOpen(props) {
     navigate(`/TranslatePage?item=${item}&time=${maxValue - minValue}`);
   }
 
+  const token=window.localStorage.getItem('token')
+
+
   async function getOpenFilm() {
+    let config = {
+      headers: {
+        header1: token,
+      }
+    }
     try {
       const res = await axios.get(
-        `https://6686a7ef83c983911b03234c.mockapi.io/films?id=${par.id}`
+        `https://6686a7ef83c983911b03234c.mockapi.io/films?id=${par.id}`,config
       );
       setOpenFilm(res.data);
       console.log(res.data)
